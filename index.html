@@ -19,26 +19,23 @@
             font-weight: bold;
         }
 
-        .area {
+        .area, .place {
             background-color: #eaeaea;
             padding: 15px;
             margin: 10px 0;
             cursor: pointer;
-            color: #0093a2;
             font-size: 24px;
             font-weight: bold;
             border-radius: 5px;
+            display: flex;
+            align-items: center;
             transition: background-color 0.3s ease;
         }
 
         .place {
             padding-left: 30px;
-            margin-top: 5px;
-            cursor: pointer;
-            color: #d87f23;
             font-size: 20px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+            color: #d87f23;
         }
 
         .group {
@@ -49,10 +46,22 @@
             transition: background-color 0.3s ease;
         }
 
-            /* HHHover states with a lighter grey fade effect */
-            .area:hover, .place:hover, .group:hover {
-                background-color: #f0f0f0;
-            }
+        /* Arrow icon for area and place */
+        .arrow {
+            margin-right: 10px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        /* Rotate the arrow when expanded */
+        .rotate {
+            transform: rotate(90deg);
+        }
+
+        /* Hover states with a lighter grey fade effect */
+        .area:hover, .place:hover, .group:hover {
+            background-color: #f0f0f0;
+        }
 
         .content-hidden {
             overflow: hidden;
@@ -70,18 +79,26 @@
     <h1>Groups</h1>
 
     <!-- Central Essex Area -->
-    <div class="area" onclick="toggleArea('central-essex')">▼ Central Essex</div>
+    <div class="area" onclick="toggleArea('central-essex', this)">
+        <span class="arrow">►</span>Central Essex
+    </div>
     <div id="central-essex" class="content-hidden">
-        <div class="place" onclick="togglePlace('chelmsford')">► Chelmsford</div>
+        <div class="place" onclick="togglePlace('chelmsford', this)">
+            <span class="arrow">►</span>Chelmsford
+        </div>
         <div id="chelmsford" class="content-hidden">
             <div class="group">Andy's Man Club</div>
             <div class="group">Who Let the Dads Out?</div>
         </div>
-        <div class="place" onclick="togglePlace('ingatestone')">► Ingatestone</div>
+        <div class="place" onclick="togglePlace('ingatestone', this)">
+            <span class="arrow">►</span>Ingatestone
+        </div>
         <div id="ingatestone" class="content-hidden">
             <div class="group">Local Support Group</div>
         </div>
-        <div class="place" onclick="togglePlace('witham')">► Witham</div>
+        <div class="place" onclick="togglePlace('witham', this)">
+            <span class="arrow">►</span>Witham
+        </div>
         <div id="witham" class="content-hidden">
             <div class="group">Dads' Coffee Morning</div>
         </div>
@@ -90,9 +107,13 @@
     <hr>
 
     <!-- North Essex Area -->
-    <div class="area" onclick="toggleArea('north-essex')">▼ North Essex</div>
+    <div class="area" onclick="toggleArea('north-essex', this)">
+        <span class="arrow">►</span>North Essex
+    </div>
     <div id="north-essex" class="content-hidden">
-        <div class="place" onclick="togglePlace('colchester')">► Colchester</div>
+        <div class="place" onclick="togglePlace('colchester', this)">
+            <span class="arrow">►</span>Colchester
+        </div>
         <div id="colchester" class="content-hidden">
             <div class="group">Group 1</div>
             <div class="group">Group 2</div>
@@ -106,27 +127,35 @@
 
     <script>
         // GSAP animation to dynamically resize the content section with smooth height expansion
-        function toggleArea(areaId) {
+        function toggleArea(areaId, areaElement) {
             const areaContent = document.getElementById(areaId);
+            const arrow = areaElement.querySelector('.arrow');
+
             if (areaContent.style.height === '0px' || !areaContent.style.height) {
                 gsap.fromTo(areaContent,
                     { height: 0 },
                     { height: areaContent.scrollHeight + "px", duration: 0.5, ease: "power2.out" }
                 );
+                gsap.to(arrow, { rotation: 90, duration: 0.3 }); // Rotate arrow
             } else {
                 gsap.to(areaContent, { height: 0, duration: 0.5, ease: "power2.in" });
+                gsap.to(arrow, { rotation: 0, duration: 0.3 }); // Reset arrow rotation
             }
         }
 
-        function togglePlace(placeId) {
+        function togglePlace(placeId, placeElement) {
             const placeContent = document.getElementById(placeId);
+            const arrow = placeElement.querySelector('.arrow');
+
             if (placeContent.style.height === '0px' || !placeContent.style.height) {
                 gsap.fromTo(placeContent,
                     { height: 0 },
                     { height: placeContent.scrollHeight + "px", duration: 0.5, ease: "power2.out" }
                 );
+                gsap.to(arrow, { rotation: 90, duration: 0.3 }); // Rotate arrow
             } else {
                 gsap.to(placeContent, { height: 0, duration: 0.5, ease: "power2.in" });
+                gsap.to(arrow, { rotation: 0, duration: 0.3 }); // Reset arrow rotation
             }
         }
     </script>

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Group Animation</title>
+    <title>Support Groups Animation</title>
     <style>
         body {
             font-family: 'Century Gothic', Arial, sans-serif;
             background-color: #f4f4f4;
-            overflow-x: hidden; /* Prevent horizontal scroll during animation */
+            overflow-x: hidden; /* Prevent scrollbars during animation */
         }
 
         .container {
@@ -28,7 +28,7 @@
             border: 2px solid #eaeaea;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s, border-bottom-color 0.3s ease;
+            transition: background-color 0.3s ease, border-bottom-color 0.3s ease;
             position: relative;
         }
 
@@ -46,29 +46,27 @@
             background-color: black;
             transform-origin: left;
             transform: scaleX(1);
-            transition: transform 0.3s ease, background-color 0.3s;
+            transition: transform 0.3s ease;
         }
 
-        /* Rotated underline for the sweep animation */
-        .rotate {
-            transform: rotate(90deg) scaleX(0);
-            width: 0;
-            height: 100vh; /* Make it vertical */
-        }
-
+        /* Line for sweeping (no thickness change) */
         .sweep {
             position: absolute;
             top: 0;
             left: 0;
-            height: 100vh;
-            width: 0;
+            height: 3px;
+            width: 100vw;
             background-color: black;
             z-index: 1;
-            transition: width 1.5s ease-in-out;
+            transition: transform 0.7s ease-in-out;
         }
 
-        .sweep-expand {
-            width: 100vw;
+        .move-right {
+            transform: translateX(100vw); /* Move to the right of the screen */
+        }
+
+        .move-left {
+            transform: translateX(0); /* Return to the left side */
         }
 
         .places {
@@ -131,34 +129,48 @@
     </div>
 
     <script>
-        // Handle click on area
+        let sweepLine = document.getElementById('sweep-line');
+        let currentArea = null;
+
         function selectArea(areaElement, areaId) {
-            const underline = areaElement.querySelector('.underline');
-            const sweepLine = document.getElementById('sweep-line');
             const places = document.getElementById(`${areaId}-places`);
 
-            // Animate underline to rotate and then sweep
-            underline.classList.add('rotate');
+            // If area already selected, reverse the animation and reset
+            if (currentArea === areaElement) {
+                resetSweep();
+                return;
+            }
 
+            // Hide other areas
+            document.querySelectorAll('.area').forEach(el => {
+                if (el !== areaElement) el.style.opacity = 0;
+            });
+
+            // Move the line to the right, clear other areas
+            sweepLine.classList.add('move-right');
+
+            // Wait for line to reach the right side, then reveal the places
             setTimeout(() => {
-                sweepLine.classList.add('sweep-expand'); // Start the sweeping animation
+                document.querySelectorAll('.places').forEach(el => el.classList.remove('show'));
+                places.classList.add('show');
 
+                // Return the line to the left but keep places revealed
                 setTimeout(() => {
-                    // Hide other areas
-                    document.querySelectorAll('.area').forEach(el => el.style.display = 'none');
+                    sweepLine.classList.remove('move-right');
+                    sweepLine.classList.add('move-left');
+                    currentArea = areaElement; // Mark as selected
+                }, 700); // Time it takes for the line to sweep right
 
-                    // Reveal the places after sweeping
-                    places.classList.add('show');
+            }, 700); // Same as above for syncing animation
+        }
 
-                    // Reset the sweep line
-                    setTimeout(() => {
-                        sweepLine.classList.remove('sweep-expand');
-                        underline.classList.remove('rotate');
-                    }, 2000);
-
-                }, 1500); // Matches sweep animation duration
-
-            }, 500); // Slight delay for the underline rotation
+        function resetSweep() {
+            // Reset everything to the original state
+            sweepLine.classList.remove('move-left');
+            sweepLine.classList.remove('move-right');
+            document.querySelectorAll('.area').forEach(el => el.style.opacity = 1);
+            document.querySelectorAll('.places').forEach(el => el.classList.remove('show'));
+            currentArea = null; // Reset current selection
         }
     </script>
 

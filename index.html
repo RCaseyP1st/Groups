@@ -3,184 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support Groups</title>
+    <title>Support Groups for Dads and Partners</title>
     <style>
-        /* General Styles */
         body {
             font-family: 'Century Gothic', Arial, sans-serif;
             background-color: #f4f4f4;
-            color: #333;
         }
 
-        h1 {
-            text-align: center;
-            font-size: 36px;
-            color: #0093a2; /* Cyan green color */
-            margin-bottom: 20px;
-        }
-
-        /* Area (e.g., Central Essex, North Essex) Styles */
         .area {
-            font-size: 30px;
-            font-weight: bold;
-            color: #0093a2; /* Cyan green color */
-            margin: 10px 0;
+            background-color: #eaeaea;
             padding: 10px;
-            background-color: #e0e0e0; /* Light grey background */
-            border: 2px solid #0093a2;
+            margin: 5px 0;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-            position: relative;
+            color: #0093a2;
+            border-radius: 5px;
         }
 
-            /* Arrow Indicator for Open/Closed State */
-            .area::before {
-                content: '▶'; /* Default right-pointing arrow */
-                font-size: 20px;
-                margin-right: 10px;
-                position: absolute;
-                left: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-                transition: transform 0.3s ease;
-            }
-
-            .area.open::before {
-                content: '▼'; /* Downward pointing arrow when open */
-            }
-
-        /* Place (e.g., Chelmsford, Witham) Styles */
-        .place summary {
-            font-size: 22px; /* Slightly smaller font size */
-            font-weight: bold;
-            color: #d87f23; /* Orange color */
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #fff3e0;
-            border: 1px solid #d87f23;
+        .place {
+            padding-left: 20px;
+            display: none;
+            margin-top: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
+            color: #d87f23;
         }
 
-        .place[open] summary {
-            background-color: #ffe0b2; /* Lighter orange when open */
-        }
-
-        /* Group Styling */
         .group {
-            margin-left: 20px;
-            margin-bottom: 20px;
+            padding-left: 40px;
+            display: none;
+            margin-top: 5px;
+            color: black;
         }
 
-            .group h3 {
-                font-size: 20px;
-                font-weight: bold;
-                color: #0093a2;
-            }
+        .area:hover, .place:hover {
+            background-color: #d0d0d0;
+        }
 
-            .group img {
-                width: 160px;
-                height: 160px;
-                float: left;
-                margin-right: 10px;
-            }
+        .group:hover {
+            background-color: #f0f0f0;
+        }
 
-            .group p {
-                font-size: 14px;
-                color: #000;
-            }
+        .expand {
+            display: none;
+        }
 
-        /* Smooth transition for places and groups */
-        .place-list, .place, .group {
-            max-height: 0;
-            opacity: 0;
+        /* Smooth animations */
+        .slide {
+            transition: max-height 0.5s ease-out;
             overflow: hidden;
-            transition: max-height 0.7s ease-in-out, opacity 0.7s ease-in-out;
-        }
-
-        .open {
-            max-height: 1000px; /* Large enough to fit the content */
-            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <h1>Support Groups in Essex</h1>
 
-    <!-- Central Essex -->
-    <div class="area" onclick="togglePlaces('central-essex', this)">Central Essex</div>
-    <div id="central-essex" class="place-list">
-        <details class="place">
-            <summary onclick="toggleGroups(this)">Chelmsford</summary>
-            <div class="group">
-                <h3>Andy's Man Club</h3>
-                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Andy's Man Club logo">
-                <p>ANDYSMANCLUB offers peer-to-peer support groups across the UK to help prevent men's suicide. Meetings at Writtle University Centre, Chelmsford.</p>
-            </div>
-            <div class="group">
-                <h3>Who Lets The Dads Out</h3>
-                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Who Lets The Dads Out logo">
-                <p>Fun, friendships, and support for dads and kids at The Orchards Cafe, Chelmsford.</p>
-            </div>
-        </details>
-        <details class="place">
-            <summary onclick="toggleGroups(this)">Ingatestone</summary>
-            <p>Group 1 and Group 2 in Ingatestone</p>
-        </details>
-        <details class="place">
-            <summary onclick="toggleGroups(this)">Witham</summary>
-            <p>Group 1 and Group 2 in Witham</p>
-        </details>
+    <h1>Support Groups for Dads and Partners</h1>
+
+    <div class="area" onclick="toggleDisplay('central-essex')">Central Essex</div>
+    <div id="central-essex" class="slide">
+        <div class="place" onclick="toggleDisplay('chelmsford')">Chelmsford</div>
+        <div id="chelmsford" class="slide">
+            <div class="group">Andy's Man Club</div>
+            <div class="group">Who Let the Dads Out?</div>
+        </div>
+        <div class="place" onclick="toggleDisplay('ingatestone')">Ingatestone</div>
+        <div id="ingatestone" class="slide">
+            <div class="group">Local Support Group</div>
+        </div>
+        <div class="place" onclick="toggleDisplay('witham')">Witham</div>
+        <div id="witham" class="slide">
+            <div class="group">Dads' Coffee Morning</div>
+        </div>
     </div>
 
-    <!-- North Essex -->
-    <div class="area" onclick="togglePlaces('north-essex', this)">North Essex</div>
-    <div id="north-essex" class="place-list">
-        <details class="place">
-            <summary onclick="toggleGroups(this)">Braintree</summary>
-            <p>Group 1 and Group 2 in Braintree</p>
-        </details>
-        <details class="place">
-            <summary onclick="toggleGroups(this)">Colchester</summary>
-            <p>Group 1 and Group 2 in Colchester</p>
-        </details>
-    </div>
-
-    <!-- Add more areas and places as needed... -->
+    <!-- Other areas: North Essex, East Essex, etc. -->
+    <!-- You can add them similarly here -->
 
     <script>
-        // Toggle the visibility of places under an area
-        function togglePlaces(areaId, areaElement) {
-            var area = document.getElementById(areaId);
-            if (area.classList.contains('open')) {
-                area.classList.remove('open');
-                areaElement.classList.remove('open'); // Update arrow
+        // Toggle display function for areas and places
+        function toggleDisplay(id) {
+            const element = document.getElementById(id);
+            if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "block";
+                element.style.maxHeight = element.scrollHeight + "px";
             } else {
-                // Close all open areas first
-                document.querySelectorAll('.place-list').forEach(function (placeList) {
-                    placeList.classList.remove('open');
-                });
-                document.querySelectorAll('.area').forEach(function (areaElem) {
-                    areaElem.classList.remove('open'); // Reset arrow for all
-                });
-                area.classList.add('open');
-                areaElement.classList.add('open'); // Update arrow
-            }
-        }
-
-        // Toggle the visibility of groups under a place
-        function toggleGroups(summaryElement) {
-            var details = summaryElement.parentElement;
-            if (details.classList.contains('open')) {
-                details.classList.remove('open');
-            } else {
-                // Close all sibling groups
-                details.parentElement.querySelectorAll('.place').forEach(function (sibling) {
-                    sibling.classList.remove('open');
-                });
-                details.classList.add('open');
+                element.style.maxHeight = "0";
+                setTimeout(() => {
+                    element.style.display = "none";
+                }, 500); // Time must match the transition duration
             }
         }
     </script>
+
 </body>
 </html>

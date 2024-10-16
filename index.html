@@ -13,7 +13,7 @@
             padding: 0;
             height: 100vh;
             display: flex;
-            justify-content: flex-start; /* Align content to the left */
+            justify-content: flex-start;
             align-items: flex-start;
         }
 
@@ -22,17 +22,15 @@
             display: flex;
             align-items: flex-start;
             position: relative;
-            padding-left: 20px; /* Push the content slightly from the edge */
+            padding-left: 20px;
         }
 
-        /* Vertical line on the left */
+        /* Vertical line next to the areas */
         .vertical-line {
             width: 3px;
             background-color: black;
             height: 100vh;
-            position: absolute;
-            left: 0;
-            top: 0;
+            margin-right: 10px; /* Small gap between the line and the text */
         }
 
         /* Areas and places aligned next to the vertical line */
@@ -40,7 +38,6 @@
             display: flex;
             flex-direction: column;
             max-width: 300px;
-            padding-left: 30px; /* Space between the line and the text */
         }
 
         .area {
@@ -134,6 +131,7 @@
             const selectedArea = document.querySelector('.area.selected');
             if (selectedArea && selectedArea !== areaElement) {
                 selectedArea.classList.remove('selected');
+                document.getElementById(selectedArea.getAttribute('data-area')).classList.remove('show');
             }
             areaElement.classList.toggle('selected');
 
@@ -147,6 +145,7 @@
             const selectedPlace = document.querySelector('.place.selected');
             if (selectedPlace && selectedPlace !== placeElement) {
                 selectedPlace.classList.remove('selected');
+                document.getElementById(selectedPlace.getAttribute('data-place')).classList.remove('show');
             }
             placeElement.classList.toggle('selected');
 

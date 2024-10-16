@@ -30,7 +30,7 @@
             display: flex;
             align-items: center;
             transition: background-color 0.3s ease;
-            color: #0093a2; /* Setdrfhy cyan color for area names */
+            color: #0093a2; /* Set cLLLLLLyan color for area names */
         }
 
         .place {
@@ -164,16 +164,25 @@
                 );
                 gsap.to(arrow, { rotation: 90, duration: 0.3 }); // Rotate arrow
 
-                // Adjust parent area height after expanding a place
-                gsap.to(parentArea, { height: parentArea.scrollHeight + "px", duration: 0.5, ease: "power2.out" });
+                // Adjust parent area height after expanding a place or its groups
+                adjustParentHeights(placeElement);
             } else {
                 gsap.to(placeContent, { height: 0, duration: 0.5, ease: "power2.in" });
                 gsap.to(arrow, { rotation: 0, duration: 0.3 }); // Reset arrow rotation
 
-                // Adjust parent area height after collapsing a place
+                // Adjust parent area height after collapsing a place or its groups
                 setTimeout(() => {
-                    gsap.to(parentArea, { height: parentArea.scrollHeight + "px", duration: 0.5, ease: "power2.out" });
+                    adjustParentHeights(placeElement);
                 }, 500); // Delay adjustment to allow collapse animation to finish
+            }
+        }
+
+        // Function to adjust the heights of parent containers when any child expands
+        function adjustParentHeights(element) {
+            let currentElement = element.closest('.content-hidden');
+            while (currentElement) {
+                gsap.to(currentElement, { height: currentElement.scrollHeight + "px", duration: 0.5, ease: "power2.out" });
+                currentElement = currentElement.closest('.content-hidden'); // Move up to next parent
             }
         }
     </script>

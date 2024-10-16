@@ -19,22 +19,21 @@
             margin-bottom: 20px;
         }
 
-        /* Region (e.g., Central Essex, North Essex) Styles */
-        .region h2 {
+        /* Area (e.g., Central Essex, North Essex) Styles */
+        .area {
             font-size: 30px;
             font-weight: bold;
             color: #0093a2; /* Cyan green color */
             margin: 10px 0;
             padding: 10px;
-            background: linear-gradient(to right, #d87f23, white); /* Orange gradient to white */
-            width: 400px; /* Fixed width for the gradient */
-            border: 2px solid #d87f23; /* Match the orange color for the border */
+            background-color: #e0e0e0; /* Light grey background */
+            border: 2px solid #0093a2;
             cursor: pointer;
             transition: background-color 0.3s ease-in-out;
         }
 
-        /* Place (e.g., Chelmsford) Styles */
-        details.place-details summary {
+        /* Place (e.g., Chelmsford, Witham) Styles */
+        .place summary {
             font-size: 24px;
             font-weight: bold;
             color: #d87f23; /* Orange color */
@@ -46,7 +45,7 @@
             transition: background-color 0.3s ease-in-out;
         }
 
-        details.place-details[open] summary {
+        .place[open] summary {
             background-color: #ffe0b2; /* Lighter orange when open */
         }
 
@@ -75,13 +74,13 @@
             }
 
         /* Accordion-style Slide Animation */
-        details {
+        .place, .group {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
         }
 
-            details[open] {
+            .place[open], .group[open] {
                 max-height: 500px; /* Adjust as necessary to fit content */
                 padding: 10px 0;
             }
@@ -96,56 +95,54 @@
     <h1>Support Groups in Essex</h1>
 
     <!-- Central Essex -->
-    <div class="region">
-        <h2 onclick="togglePlaces('central-essex')">Central Essex</h2>
-        <div id="central-essex" style="display: none;">
-            <details class="place-details">
-                <summary>Chelmsford</summary>
-                <div class="group">
-                    <h3>Andy's Man Club</h3>
-                    <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Andy's Man Club logo">
-                    <p>ANDYSMANCLUB offers peer-to-peer support groups across the UK to help prevent men's suicide. Meetings at Writtle University Centre, Chelmsford.</p>
-                </div>
-                <div class="group">
-                    <h3>Who Lets The Dads Out</h3>
-                    <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Who Lets The Dads Out logo">
-                    <p>Fun, friendships, and support for dads and kids at The Orchards Cafe, Chelmsford.</p>
-                </div>
-            </details>
-            <details class="place-details">
-                <summary>Ingatestone</summary>
-                <p>Group 1 and Group 2 in Ingatestone</p>
-            </details>
-            <details class="place-details">
-                <summary>Witham</summary>
-                <p>Group 1 and Group 2 in Witham</p>
-            </details>
-        </div>
+    <div class="area" onclick="togglePlaces('central-essex')">Central Essex</div>
+    <div id="central-essex" class="place-list" style="display: none;">
+        <details class="place">
+            <summary>Chelmsford</summary>
+            <div class="group">
+                <h3>Andy's Man Club</h3>
+                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Andy's Man Club logo">
+                <p>ANDYSMANCLUB offers peer-to-peer support groups across the UK to help prevent men's suicide. Meetings at Writtle University Centre, Chelmsford.</p>
+            </div>
+            <div class="group">
+                <h3>Who Lets The Dads Out</h3>
+                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Who Lets The Dads Out logo">
+                <p>Fun, friendships, and support for dads and kids at The Orchards Cafe, Chelmsford.</p>
+            </div>
+        </details>
+        <details class="place">
+            <summary>Ingatestone</summary>
+            <p>Group 1 and Group 2 in Ingatestone</p>
+        </details>
+        <details class="place">
+            <summary>Witham</summary>
+            <p>Group 1 and Group 2 in Witham</p>
+        </details>
     </div>
 
     <!-- North Essex -->
-    <div class="region">
-        <h2 onclick="togglePlaces('north-essex')">North Essex</h2>
-        <div id="north-essex" style="display: none;">
-            <details class="place-details">
-                <summary>Braintree</summary>
-                <p>Group 1 and Group 2 in Braintree</p>
-            </details>
-            <details class="place-details">
-                <summary>Colchester</summary>
-                <p>Group 1 and Group 2 in Colchester</p>
-            </details>
-        </div>
+    <div class="area" onclick="togglePlaces('north-essex')">North Essex</div>
+    <div id="north-essex" class="place-list" style="display: none;">
+        <details class="place">
+            <summary>Braintree</summary>
+            <p>Group 1 and Group 2 in Braintree</p>
+        </details>
+        <details class="place">
+            <summary>Colchester</summary>
+            <p>Group 1 and Group 2 in Colchester</p>
+        </details>
     </div>
 
+    <!-- Add more areas and places as needed... -->
+
     <script>
-        // Function to toggle visibility of the places within each region
-        function togglePlaces(regionId) {
-            var region = document.getElementById(regionId);
-            if (region.style.display === "none") {
-                region.style.display = "block";
+        // Toggle the visibility of places under an area
+        function togglePlaces(areaId) {
+            var area = document.getElementById(areaId);
+            if (area.style.display === "none") {
+                area.style.display = "block";
             } else {
-                region.style.display = "none";
+                area.style.display = "none";
             }
         }
     </script>

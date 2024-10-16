@@ -20,7 +20,7 @@
         }
 
         /* Area (e.g., Central Essex, North Essex) Styles */
-        .area {
+        .area summary {
             font-size: 30px;
             font-weight: bold;
             color: #0093a2; /* Cyan green color */
@@ -72,31 +72,14 @@
                 font-size: 14px;
                 color: #000;
             }
-
-        /* Accordion-style Slide Animation */
-        .place, .group {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
-        }
-
-            .place[open], .group[open] {
-                max-height: 500px; /* Adjust as necessary to fit content */
-                padding: 10px 0;
-            }
-
-        hr {
-            border: 1px solid black;
-            margin: 20px 0;
-        }
     </style>
 </head>
 <body>
     <h1>Support Groups in Essex</h1>
 
     <!-- Central Essex -->
-    <div class="area" onclick="togglePlaces('central-essex')">Central Essex</div>
-    <div id="central-essex" class="place-list" style="display: none;">
+    <details class="area">
+        <summary>Central Essex</summary>
         <details class="place">
             <summary>Chelmsford</summary>
             <div class="group">
@@ -118,11 +101,11 @@
             <summary>Witham</summary>
             <p>Group 1 and Group 2 in Witham</p>
         </details>
-    </div>
+    </details>
 
     <!-- North Essex -->
-    <div class="area" onclick="togglePlaces('north-essex')">North Essex</div>
-    <div id="north-essex" class="place-list" style="display: none;">
+    <details class="area">
+        <summary>North Essex</summary>
         <details class="place">
             <summary>Braintree</summary>
             <p>Group 1 and Group 2 in Braintree</p>
@@ -131,20 +114,20 @@
             <summary>Colchester</summary>
             <p>Group 1 and Group 2 in Colchester</p>
         </details>
-    </div>
+    </details>
 
-    <!-- Add more areas and places as needed... -->
-
+    <!-- JavaScript for nested collapsing behavior -->
     <script>
-        // Toggle the visibility of places under an area
-        function togglePlaces(areaId) {
-            var area = document.getElementById(areaId);
-            if (area.style.display === "none" || area.style.display === "") {
-                area.style.display = "block";
-            } else {
-                area.style.display = "none";
-            }
-        }
+        // Ensure that when an area closes, all its places and groups are closed too
+        document.querySelectorAll('.area').forEach((areaDetail) => {
+            areaDetail.addEventListener('toggle', function () {
+                if (!this.open) {
+                    this.querySelectorAll('details').forEach((placeDetail) => {
+                        placeDetail.open = false; // Close all places when the area closes
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>

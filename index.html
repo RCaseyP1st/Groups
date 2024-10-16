@@ -30,6 +30,7 @@
             display: flex;
             align-items: center;
             transition: background-color 0.3s ease;
+            color: #0093a2; /* Set cyan color for area names */
         }
 
         .place {
@@ -140,6 +141,14 @@
             } else {
                 gsap.to(areaContent, { height: 0, duration: 0.5, ease: "power2.in" });
                 gsap.to(arrow, { rotation: 0, duration: 0.3 }); // Reset arrow rotation
+
+                // Close all child places when area is closed
+                const childPlaces = areaContent.querySelectorAll('.place');
+                childPlaces.forEach(place => {
+                    const placeId = place.getAttribute('onclick').match(/'(.*?)'/)[1];
+                    const placeContent = document.getElementById(placeId);
+                    gsap.to(placeContent, { height: 0, duration: 0.5, ease: "power2.in" });
+                });
             }
         }
 

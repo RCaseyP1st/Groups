@@ -8,114 +8,108 @@
         body {
             font-family: 'Century Gothic', Arial, sans-serif;
             background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        h1 {
-            color: #0093a2;
-            font-size: 36px; /* Adjust to match header size in image */
-            font-weight: bold;
-        }
-
-        .area {
-            background-color: #eaeaea;
-            padding: 15px;
-            margin: 10px 0;
-            cursor: pointer;
-            color: #0093a2;
-            font-size: 24px; /* Adjust size to match the image */
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+        .container {
+            position: relative;
+            width: 300px;
+            border-left: 3px solid #0093a2; /* Vertical line */
         }
 
         .place {
-            padding-left: 30px;
-            margin-top: 5px;
+            position: relative;
+            padding: 10px;
             cursor: pointer;
-            color: #d87f23;
-            font-size: 20px; /* Adjust size to match the image */
             font-weight: bold;
-            transition: background-color 0.3s ease;
+            color: #d87f23;
+            transition: transform 0.5s ease; /* Smooth slide effect */
         }
 
-        .group {
-            padding-left: 45px;
-            margin-top: 5px;
-            color: black;
-            font-size: 18px; /* Adjust size to match the image */
-            transition: background-color 0.3s ease;
-        }
-
-            /* Hover states with a lighter grey fade effect */
-            .area:hover, .place:hover, .group:hover {
-                background-color: #f0f0f0;
+            .place:hover {
+                color: #0093a2;
             }
 
-        .slide {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
+            /* Initial slide in from left or right */
+            .place:nth-child(odd) {
+                transform: translateX(-100%);
+            }
+
+            .place:nth-child(even) {
+                transform: translateX(100%);
+            }
+
+        /* Slide in from both sides */
+        .show-places .place {
+            transform: translateX(0);
         }
 
-        .expand {
-            max-height: 500px; /* Adjust based on content */
+        /* Selected place animation */
+        .selected {
+            border-bottom: 2px solid #0093a2;
         }
 
-        hr {
-            border: 1px solid #ccc;
-            margin: 10px 0;
+        /* Hide other places when one is selected */
+        .hide-places .place:not(.selected) {
+            display: none;
+        }
+
+        /* Reveal the group details */
+        .group {
+            display: none;
+            padding: 10px;
+            font-size: 14px;
+            color: black;
+        }
+
+        .show-group .group {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>Groups</h1>
+    <div class="container">
+        <div class="place" onclick="selectPlace(this, 'chelmsford')">Chelmsford</div>
+        <div class="place" onclick="selectPlace(this, 'ingatestone')">Ingatestone</div>
+        <div class="place" onclick="selectPlace(this, 'witham')">Witham</div>
 
-    <div class="area" onclick="toggleDisplay('central-essex')">▼ Central Essex</div>
-    <div id="central-essex" class="slide">
-        <div class="place" onclick="toggleDisplay('chelmsford')">► Chelmsford</div>
-        <div id="chelmsford" class="slide">
-            <div class="group">Andy's Man Club</div>
-            <div class="group">Who Let the Dads Out?</div>
-        </div>
-        <div class="place" onclick="toggleDisplay('ingatestone')">► Ingatestone</div>
-        <div id="ingatestone" class="slide">
-            <div class="group">Local Support Group</div>
-        </div>
-        <div class="place" onclick="toggleDisplay('witham')">► Witham</div>
-        <div id="witham" class="slide">
-            <div class="group">Dads' Coffee Morning</div>
-        </div>
+        <!-- Group details (initially hidden) -->
+        <div id="chelmsford-group" class="group">Andy's Man Club, Who Let the Dads Out?</div>
+        <div id="ingatestone-group" class="group">Local Support Group</div>
+        <div id="witham-group" class="group">Dads' Coffee Morning</div>
     </div>
-
-    <hr>
-
-    <div class="area" onclick="toggleDisplay('north-essex')">▼ North Essex</div>
-    <div id="north-essex" class="slide">
-        <div class="place" onclick="toggleDisplay('colchester')">► Colchester</div>
-        <div id="colchester" class="slide">
-            <div class="group">Group 1</div>
-            <div class="group">Group 2</div>
-        </div>
-        <!-- Add more places/groups similarly -->
-    </div>
-
-    <hr>
-
-    <!-- Add more areas similarly -->
 
     <script>
-        // Toggle display for areas and places with smooth animation
-        function toggleDisplay(id) {
-            const element = document.getElementById(id);
-            if (element.classList.contains('expand')) {
-                element.classList.remove('expand');
-                element.style.maxHeight = null;
-            } else {
-                element.classList.add('expand');
-                element.style.maxHeight = element.scrollHeight + "px";
-            }
+        // Function to select a place and animate the line
+        function selectPlace(place, groupId) {
+            // Hide other places and show only the selected one
+            document.querySelector('.container').classList.add('hide-places');
+            place.classList.add('selected');
+
+            // Show group details
+            document.getElementById(groupId + '-group').classList.add('show-group');
         }
+
+        // Initial animation to show places sliding in from both sides
+        window.onload = () => {
+            document.querySelector('.container').classList.add('show-places');
+        };
     </script>
 
 </body>

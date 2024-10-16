@@ -127,29 +127,19 @@
 
     <script>
         function togglePlaces(areaElement, areaId) {
-            // Toggle selection of the clicked area
-            const selectedArea = document.querySelector('.area.selected');
-            if (selectedArea && selectedArea !== areaElement) {
-                selectedArea.classList.remove('selected');
-                document.getElementById(selectedArea.getAttribute('data-area')).classList.remove('show');
-            }
+            // Toggle the 'selected' class on the clicked area
             areaElement.classList.toggle('selected');
 
-            // Show/hide places under the area
+            // Toggle the visibility of the places under the selected area
             const places = document.getElementById(areaId);
             places.classList.toggle('show');
         }
 
         function toggleGroups(placeElement, placeId) {
-            // Toggle selection of the clicked place
-            const selectedPlace = document.querySelector('.place.selected');
-            if (selectedPlace && selectedPlace !== placeElement) {
-                selectedPlace.classList.remove('selected');
-                document.getElementById(selectedPlace.getAttribute('data-place')).classList.remove('show');
-            }
+            // Toggle the 'selected' class on the clicked place
             placeElement.classList.toggle('selected');
 
-            // Show/hide groups under the place
+            // Toggle the visibility of the groups under the selected place
             const groups = document.getElementById(placeId);
             groups.classList.toggle('show');
         }

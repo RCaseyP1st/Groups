@@ -73,15 +73,15 @@
                 color: #000;
             }
 
-        /* CSS for smooth height transition */
-        .place, .group {
+        /* Slide down animation for accordion effect */
+        .place-list {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-in-out;
         }
 
-            .place.open, .group.open {
-                max-height: 1000px; /* Just a large enough number to accommodate content */
+            .place-list.open {
+                max-height: 1000px; /* Adjust as necessary to fit content */
             }
     </style>
 </head>
@@ -90,67 +90,57 @@
 
     <!-- Central Essex -->
     <details class="area">
-        <summary>Central Essex</summary>
-        <details class="place">
-            <summary>Chelmsford</summary>
-            <div class="group">
-                <h3>Andy's Man Club</h3>
-                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Andy's Man Club logo">
-                <p>ANDYSMANCLUB offers peer-to-peer support groups across the UK to help prevent men's suicide. Meetings at Writtle University Centre, Chelmsford.</p>
-            </div>
-            <div class="group">
-                <h3>Who Lets The Dads Out</h3>
-                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Who Lets The Dads Out logo">
-                <p>Fun, friendships, and support for dads and kids at The Orchards Cafe, Chelmsford.</p>
-            </div>
-        </details>
-        <details class="place">
-            <summary>Ingatestone</summary>
-            <p>Group 1 and Group 2 in Ingatestone</p>
-        </details>
-        <details class="place">
-            <summary>Witham</summary>
-            <p>Group 1 and Group 2 in Witham</p>
-        </details>
+        <summary onclick="togglePlaces('central-essex')">Central Essex</summary>
+        <div id="central-essex" class="place-list">
+            <details class="place">
+                <summary>Chelmsford</summary>
+                <div class="group">
+                    <h3>Andy's Man Club</h3>
+                    <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Andy's Man Club logo">
+                    <p>ANDYSMANCLUB offers peer-to-peer support groups across the UK to help prevent men's suicide. Meetings at Writtle University Centre, Chelmsford.</p>
+                </div>
+                <div class="group">
+                    <h3>Who Lets The Dads Out</h3>
+                    <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Who Lets The Dads Out logo">
+                    <p>Fun, friendships, and support for dads and kids at The Orchards Cafe, Chelmsford.</p>
+                </div>
+            </details>
+            <details class="place">
+                <summary>Ingatestone</summary>
+                <p>Group 1 and Group 2 in Ingatestone</p>
+            </details>
+            <details class="place">
+                <summary>Witham</summary>
+                <p>Group 1 and Group 2 in Witham</p>
+            </details>
+        </div>
     </details>
 
     <!-- North Essex -->
     <details class="area">
-        <summary>North Essex</summary>
-        <details class="place">
-            <summary>Braintree</summary>
-            <p>Group 1 and Group 2 in Braintree</p>
-        </details>
-        <details class="place">
-            <summary>Colchester</summary>
-            <p>Group 1 and Group 2 in Colchester</p>
-        </details>
+        <summary onclick="togglePlaces('north-essex')">North Essex</summary>
+        <div id="north-essex" class="place-list">
+            <details class="place">
+                <summary>Braintree</summary>
+                <p>Group 1 and Group 2 in Braintree</p>
+            </details>
+            <details class="place">
+                <summary>Colchester</summary>
+                <p>Group 1 and Group 2 in Colchester</p>
+            </details>
+        </div>
     </details>
 
     <!-- JavaScript for smooth transitions -->
     <script>
-        // Toggle the visibility of places under an area
-        document.querySelectorAll('.place').forEach((placeDetail) => {
-            placeDetail.addEventListener('toggle', function () {
-                if (this.open) {
-                    this.classList.add('open');
-                } else {
-                    this.classList.remove('open');
-                }
-            });
-        });
-
-        // Ensure that when an area closes, all its places and groups are closed too
-        document.querySelectorAll('.area').forEach((areaDetail) => {
-            areaDetail.addEventListener('toggle', function () {
-                if (!this.open) {
-                    this.querySelectorAll('details').forEach((placeDetail) => {
-                        placeDetail.open = false; // Close all places when the area closes
-                        placeDetail.classList.remove('open'); // Remove the open class for the transition
-                    });
-                }
-            });
-        });
+        function togglePlaces(areaId) {
+            var area = document.getElementById(areaId);
+            if (area.classList.contains('open')) {
+                area.classList.remove('open');
+            } else {
+                area.classList.add('open');
+            }
+        }
     </script>
 </body>
 </html>

@@ -9,11 +9,13 @@
         body {
             font-family: 'Century Gothic', Arial, sans-serif;
             background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
         }
 
         h1 {
             color: #0093a2;
-            font-size: 36px; /* Adjust to match header size in image */
+            font-size: 36px;
             font-weight: bold;
         }
 
@@ -23,7 +25,7 @@
             margin: 10px 0;
             cursor: pointer;
             color: #0093a2;
-            font-size: 24px; /* Adjust size to match the image */
+            font-size: 24px;
             font-weight: bold;
             border-radius: 5px;
             transition: background-color 0.3s ease;
@@ -34,7 +36,7 @@
             margin-top: 5px;
             cursor: pointer;
             color: #d87f23;
-            font-size: 20px; /* Adjust size to match the image */
+            font-size: 20px;
             font-weight: bold;
             transition: background-color 0.3s ease;
         }
@@ -43,7 +45,7 @@
             padding-left: 45px;
             margin-top: 5px;
             color: black;
-            font-size: 18px; /* Adjust size to match the image */
+            font-size: 18px;
             transition: background-color 0.3s ease;
         }
 
@@ -53,7 +55,8 @@
             }
 
         .content-hidden {
-            display: none;
+            overflow: hidden;
+            height: 0;
         }
 
         hr {
@@ -102,23 +105,22 @@
     <!-- Add more areas similarly -->
 
     <script>
-        // GSAP animation to toggle area content
+        // GSAP animation to dynamically resize the content section
         function toggleArea(areaId) {
             const areaContent = document.getElementById(areaId);
-            if (areaContent.style.display === 'none' || !areaContent.style.display) {
-                gsap.to(areaContent, { height: 'auto', opacity: 1, display: 'block', duration: 0.5 });
+            if (areaContent.clientHeight === 0) {
+                gsap.to(areaContent, { height: 'auto', duration: 0.5, ease: "power1.out" });
             } else {
-                gsap.to(areaContent, { height: 0, opacity: 0, display: 'none', duration: 0.5 });
+                gsap.to(areaContent, { height: 0, duration: 0.5, ease: "power1.in" });
             }
         }
 
-        // GSAP animation to toggle place content
         function togglePlace(placeId) {
             const placeContent = document.getElementById(placeId);
-            if (placeContent.style.display === 'none' || !placeContent.style.display) {
-                gsap.to(placeContent, { height: 'auto', opacity: 1, display: 'block', duration: 0.5 });
+            if (placeContent.clientHeight === 0) {
+                gsap.to(placeContent, { height: 'auto', duration: 0.5, ease: "power1.out" });
             } else {
-                gsap.to(placeContent, { height: 0, opacity: 0, display: 'none', duration: 0.5 });
+                gsap.to(placeContent, { height: 0, duration: 0.5, ease: "power1.in" });
             }
         }
     </script>

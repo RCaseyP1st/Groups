@@ -20,21 +20,19 @@
         }
 
         /* Region (e.g., Central Essex, North Essex) Styles */
-        .region-details summary {
-            font-size: 30px;
-            font-weight: bold;
-            color: #0093a2; /* Cyan green color */
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #e0f7fa;
-            border: 2px solid #0093a2;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
+        .region {
+            margin-bottom: 20px;
         }
 
-        .region-details[open] summary {
-            background-color: #b2ebf2; /* Slightly lighter cyan when open */
-        }
+            .region h2 {
+                font-size: 30px;
+                font-weight: bold;
+                color: #0093a2; /* Cyan green color */
+                margin: 10px 0;
+                padding: 10px;
+                background-color: #e0f7fa;
+                border: 2px solid #0093a2;
+            }
 
         /* Place (e.g., Chelmsford) Styles */
         details summary {
@@ -88,11 +86,6 @@
                 max-height: 500px; /* Adjust as necessary to fit content */
                 padding: 10px 0;
             }
-
-        hr {
-            border: 1px solid black;
-            margin: 20px 0;
-        }
     </style>
 </head>
 <body>
@@ -100,50 +93,45 @@
 
     <!-- Central Essex -->
     <div class="region">
-        <details class="region-details">
-            <summary>Central Essex</summary>
-            <details>
-                <summary>Chelmsford</summary>
-                <div class="group">
-                    <h3>Andy's Man Club</h3>
-                    <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Andy's Man Club logo">
-                    <p>ANDYSMANCLUB offers peer-to-peer support groups across the UK to help prevent men's suicide. Meetings at Writtle University Centre, Chelmsford.</p>
-                </div>
-                <div class="group">
-                    <h3>Who Lets The Dads Out</h3>
-                    <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Who Lets The Dads Out logo">
-                    <p>Fun, friendships, and support for dads and kids at The Orchards Cafe, Chelmsford.</p>
-                </div>
-            </details>
-            <details>
-                <summary>Ingatestone</summary>
-                <p>Group 1 and Group 2 in Ingatestone</p>
-            </details>
-            <details>
-                <summary>Witham</summary>
-                <p>Group 1 and Group 2 in Witham</p>
-            </details>
+        <h2>Central Essex</h2>
+        <details>
+            <summary>Chelmsford</summary>
+            <div class="group">
+                <h3>Andy's Man Club</h3>
+                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Andy's Man Club logo">
+                <p>ANDYSMANCLUB offers peer-to-peer support groups across the UK to help prevent men's suicide. Meetings at Writtle University Centre, Chelmsford.</p>
+            </div>
+            <div class="group">
+                <h3>Who Lets The Dads Out</h3>
+                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Who Lets The Dads Out logo">
+                <p>Fun, friendships, and support for dads and kids at The Orchards Cafe, Chelmsford.</p>
+            </div>
+        </details>
+        <details>
+            <summary>Ingatestone</summary>
+            <p>Group 1 and Group 2 in Ingatestone</p>
+        </details>
+        <details>
+            <summary>Witham</summary>
+            <p>Group 1 and Group 2 in Witham</p>
         </details>
     </div>
 
     <!-- North Essex -->
     <div class="region">
-        <details class="region-details">
-            <summary>North Essex</summary>
-            <details>
-                <summary>Braintree</summary>
-                <p>Group 1 and Group 2 in Braintree</p>
-            </details>
-            <details>
-                <summary>Colchester</summary>
-                <p>Group 1 and Group 2 in Colchester</p>
-            </details>
-            <!-- Add more groups as needed -->
+        <h2>North Essex</h2>
+        <details>
+            <summary>Braintree</summary>
+            <p>Group 1 and Group 2 in Braintree</p>
         </details>
+        <details>
+            <summary>Colchester</summary>
+            <p>Group 1 and Group 2 in Colchester</p>
+        </details>
+        <!-- Add more groups as needed -->
     </div>
 
     <!-- Continue with other regions as necessary... -->
 
-    
 </body>
 </html>

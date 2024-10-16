@@ -21,7 +21,6 @@
 
         .place {
             padding-left: 20px;
-            display: none;
             margin-top: 5px;
             cursor: pointer;
             color: #d87f23;
@@ -29,7 +28,6 @@
 
         .group {
             padding-left: 40px;
-            display: none;
             margin-top: 5px;
             color: black;
         }
@@ -42,14 +40,14 @@
             background-color: #f0f0f0;
         }
 
-        .expand {
-            display: none;
+        .slide {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
         }
 
-        /* Smooth animations */
-        .slide {
-            transition: max-height 0.5s ease-out;
-            overflow: hidden;
+        .expand {
+            max-height: 500px; /* You can adjust this based on content */
         }
     </style>
 </head>
@@ -74,21 +72,18 @@
         </div>
     </div>
 
-    <!-- Other areas: North Essex, East Essex, etc. -->
-    <!-- You can add them similarly here -->
+    <!-- Add more areas similarly -->
 
     <script>
-        // Toggle display function for areas and places
+        // Toggle display for areas and places with smooth animation
         function toggleDisplay(id) {
             const element = document.getElementById(id);
-            if (element.style.display === "none" || element.style.display === "") {
-                element.style.display = "block";
-                element.style.maxHeight = element.scrollHeight + "px";
+            if (element.classList.contains('expand')) {
+                element.classList.remove('expand');
+                element.style.maxHeight = null;
             } else {
-                element.style.maxHeight = "0";
-                setTimeout(() => {
-                    element.style.display = "none";
-                }, 500); // Time must match the transition duration
+                element.classList.add('expand');
+                element.style.maxHeight = element.scrollHeight + "px";
             }
         }
     </script>

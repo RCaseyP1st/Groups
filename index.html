@@ -30,7 +30,24 @@
             border: 2px solid #0093a2;
             cursor: pointer;
             transition: background-color 0.3s ease-in-out;
+            position: relative;
         }
+
+            /* Arrow Indicator for Open/Closed State */
+            .area::before {
+                content: '▶'; /* Default right-pointing arrow */
+                font-size: 20px;
+                margin-right: 10px;
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                transition: transform 0.3s ease;
+            }
+
+            .area.open::before {
+                content: '▼'; /* Downward pointing arrow when open */
+            }
 
         /* Place (e.g., Chelmsford, Witham) Styles */
         .place summary {
@@ -91,7 +108,7 @@
     <h1>Support Groups in Essex</h1>
 
     <!-- Central Essex -->
-    <div class="area" onclick="togglePlaces('central-essex')">Central Essex</div>
+    <div class="area" onclick="togglePlaces('central-essex', this)">Central Essex</div>
     <div id="central-essex" class="place-list">
         <details class="place">
             <summary onclick="toggleGroups(this)">Chelmsford</summary>
@@ -117,7 +134,7 @@
     </div>
 
     <!-- North Essex -->
-    <div class="area" onclick="togglePlaces('north-essex')">North Essex</div>
+    <div class="area" onclick="togglePlaces('north-essex', this)">North Essex</div>
     <div id="north-essex" class="place-list">
         <details class="place">
             <summary onclick="toggleGroups(this)">Braintree</summary>
@@ -133,16 +150,21 @@
 
     <script>
         // Toggle the visibility of places under an area
-        function togglePlaces(areaId) {
+        function togglePlaces(areaId, areaElement) {
             var area = document.getElementById(areaId);
             if (area.classList.contains('open')) {
                 area.classList.remove('open');
+                areaElement.classList.remove('open'); // Update arrow
             } else {
                 // Close all open areas first
                 document.querySelectorAll('.place-list').forEach(function (placeList) {
                     placeList.classList.remove('open');
                 });
+                document.querySelectorAll('.area').forEach(function (areaElem) {
+                    areaElem.classList.remove('open'); // Reset arrow for all
+                });
                 area.classList.add('open');
+                areaElement.classList.add('open'); // Update arrow
             }
         }
 

@@ -20,7 +20,7 @@
         }
 
         /* Area (e.g., Central Essex, North Essex) Styles */
-        .area summary {
+        .area {
             font-size: 30px;
             font-weight: bold;
             color: #0093a2; /* Cyan green color */
@@ -34,7 +34,7 @@
 
         /* Place (e.g., Chelmsford, Witham) Styles */
         .place summary {
-            font-size: 24px;
+            font-size: 22px; /* Slightly smaller font size */
             font-weight: bold;
             color: #d87f23; /* Orange color */
             margin: 10px 0;
@@ -73,68 +73,66 @@
                 color: #000;
             }
 
-        /* Smooth reveal effect using opacity and height */
-        .place-list {
+        /* Smooth transition for places and groups */
+        .place-list, .place, .group {
             max-height: 0;
             opacity: 0;
             overflow: hidden;
-            transition: max-height 1s ease-in-out, opacity 1s ease-in-out;
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
         }
 
-            .place-list.open {
-                max-height: 1000px; /* Ensure it is larger than the content */
-                opacity: 1;
-            }
+        .open {
+            max-height: 1000px; /* Large enough to fit the content */
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
     <h1>Support Groups in Essex</h1>
 
     <!-- Central Essex -->
-    <details class="area">
-        <summary onclick="togglePlaces('central-essex')">Central Essex</summary>
-        <div id="central-essex" class="place-list">
-            <details class="place">
-                <summary>Chelmsford</summary>
-                <div class="group">
-                    <h3>Andy's Man Club</h3>
-                    <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Andy's Man Club logo">
-                    <p>ANDYSMANCLUB offers peer-to-peer support groups across the UK to help prevent men's suicide. Meetings at Writtle University Centre, Chelmsford.</p>
-                </div>
-                <div class="group">
-                    <h3>Who Lets The Dads Out</h3>
-                    <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Who Lets The Dads Out logo">
-                    <p>Fun, friendships, and support for dads and kids at The Orchards Cafe, Chelmsford.</p>
-                </div>
-            </details>
-            <details class="place">
-                <summary>Ingatestone</summary>
-                <p>Group 1 and Group 2 in Ingatestone</p>
-            </details>
-            <details class="place">
-                <summary>Witham</summary>
-                <p>Group 1 and Group 2 in Witham</p>
-            </details>
-        </div>
-    </details>
+    <div class="area" onclick="togglePlaces('central-essex')">Central Essex</div>
+    <div id="central-essex" class="place-list">
+        <details class="place">
+            <summary onclick="toggleGroups(this)">Chelmsford</summary>
+            <div class="group">
+                <h3>Andy's Man Club</h3>
+                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Andy's Man Club logo">
+                <p>ANDYSMANCLUB offers peer-to-peer support groups across the UK to help prevent men's suicide. Meetings at Writtle University Centre, Chelmsford.</p>
+            </div>
+            <div class="group">
+                <h3>Who Lets The Dads Out</h3>
+                <img src="https://github.com/RCaseyP1st/Groups/blob/master/Images/DadsCafeBrentwood.png?raw=true" alt="Who Lets The Dads Out logo">
+                <p>Fun, friendships, and support for dads and kids at The Orchards Cafe, Chelmsford.</p>
+            </div>
+        </details>
+        <details class="place">
+            <summary onclick="toggleGroups(this)">Ingatestone</summary>
+            <p>Group 1 and Group 2 in Ingatestone</p>
+        </details>
+        <details class="place">
+            <summary onclick="toggleGroups(this)">Witham</summary>
+            <p>Group 1 and Group 2 in Witham</p>
+        </details>
+    </div>
 
     <!-- North Essex -->
-    <details class="area">
-        <summary onclick="togglePlaces('north-essex')">North Essex</summary>
-        <div id="north-essex" class="place-list">
-            <details class="place">
-                <summary>Braintree</summary>
-                <p>Group 1 and Group 2 in Braintree</p>
-            </details>
-            <details class="place">
-                <summary>Colchester</summary>
-                <p>Group 1 and Group 2 in Colchester</p>
-            </details>
-        </div>
-    </details>
+    <div class="area" onclick="togglePlaces('north-essex')">North Essex</div>
+    <div id="north-essex" class="place-list">
+        <details class="place">
+            <summary onclick="toggleGroups(this)">Braintree</summary>
+            <p>Group 1 and Group 2 in Braintree</p>
+        </details>
+        <details class="place">
+            <summary onclick="toggleGroups(this)">Colchester</summary>
+            <p>Group 1 and Group 2 in Colchester</p>
+        </details>
+    </div>
 
-    <!-- JavaScript for smooth reveal effect -->
+    <!-- Add more areas and places as needed... -->
+
     <script>
+        // Toggle the visibility of places under an area
         function togglePlaces(areaId) {
             var area = document.getElementById(areaId);
             if (area.classList.contains('open')) {
@@ -143,6 +141,10 @@
                 area.classList.add('open');
             }
         }
-    </script>
-</body>
-</html>
+
+        // Toggle the visibility of groups under a place
+        function toggleGroups(summaryElement) {
+            var details = summaryElement.parentElement;
+            if (details.classList.contains('open')) {
+                details.classList.remove('open');
+            }

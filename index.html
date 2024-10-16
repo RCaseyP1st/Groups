@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support Groups for Dads and Partners</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
     <style>
         body {
             font-family: 'Century Gothic', Arial, sans-serif;
@@ -51,14 +52,8 @@
                 background-color: #f0f0f0;
             }
 
-        .slide {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-        }
-
-        .expand {
-            max-height: 500px; /* Adjust based on content */
+        .content-hidden {
+            display: none;
         }
 
         hr {
@@ -71,29 +66,31 @@
 
     <h1>Groups</h1>
 
-    <div class="area" onclick="toggleDisplay('central-essex')">▼ Central Essex</div>
-    <div id="central-essex" class="slide">
-        <div class="place" onclick="toggleDisplay('chelmsford')">► Chelmsford</div>
-        <div id="chelmsford" class="slide">
+    <!-- Central Essex Area -->
+    <div class="area" onclick="toggleArea('central-essex')">▼ Central Essex</div>
+    <div id="central-essex" class="content-hidden">
+        <div class="place" onclick="togglePlace('chelmsford')">► Chelmsford</div>
+        <div id="chelmsford" class="content-hidden">
             <div class="group">Andy's Man Club</div>
             <div class="group">Who Let the Dads Out?</div>
         </div>
-        <div class="place" onclick="toggleDisplay('ingatestone')">► Ingatestone</div>
-        <div id="ingatestone" class="slide">
+        <div class="place" onclick="togglePlace('ingatestone')">► Ingatestone</div>
+        <div id="ingatestone" class="content-hidden">
             <div class="group">Local Support Group</div>
         </div>
-        <div class="place" onclick="toggleDisplay('witham')">► Witham</div>
-        <div id="witham" class="slide">
+        <div class="place" onclick="togglePlace('witham')">► Witham</div>
+        <div id="witham" class="content-hidden">
             <div class="group">Dads' Coffee Morning</div>
         </div>
     </div>
 
     <hr>
 
-    <div class="area" onclick="toggleDisplay('north-essex')">▼ North Essex</div>
-    <div id="north-essex" class="slide">
-        <div class="place" onclick="toggleDisplay('colchester')">► Colchester</div>
-        <div id="colchester" class="slide">
+    <!-- North Essex Area -->
+    <div class="area" onclick="toggleArea('north-essex')">▼ North Essex</div>
+    <div id="north-essex" class="content-hidden">
+        <div class="place" onclick="togglePlace('colchester')">► Colchester</div>
+        <div id="colchester" class="content-hidden">
             <div class="group">Group 1</div>
             <div class="group">Group 2</div>
         </div>
@@ -105,15 +102,23 @@
     <!-- Add more areas similarly -->
 
     <script>
-        // Toggle display for areas and places with smooth animation
-        function toggleDisplay(id) {
-            const element = document.getElementById(id);
-            if (element.classList.contains('expand')) {
-                element.classList.remove('expand');
-                element.style.maxHeight = null;
+        // GSAP animation to toggle area content
+        function toggleArea(areaId) {
+            const areaContent = document.getElementById(areaId);
+            if (areaContent.style.display === 'none' || !areaContent.style.display) {
+                gsap.to(areaContent, { height: 'auto', opacity: 1, display: 'block', duration: 0.5 });
             } else {
-                element.classList.add('expand');
-                element.style.maxHeight = element.scrollHeight + "px";
+                gsap.to(areaContent, { height: 0, opacity: 0, display: 'none', duration: 0.5 });
+            }
+        }
+
+        // GSAP animation to toggle place content
+        function togglePlace(placeId) {
+            const placeContent = document.getElementById(placeId);
+            if (placeContent.style.display === 'none' || !placeContent.style.display) {
+                gsap.to(placeContent, { height: 'auto', opacity: 1, display: 'block', duration: 0.5 });
+            } else {
+                gsap.to(placeContent, { height: 0, opacity: 0, display: 'none', duration: 0.5 });
             }
         }
     </script>

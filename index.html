@@ -12,7 +12,7 @@
             margin: 0;
             padding: 20px;
         }
-
+        /* ewryaerdyh */
         h1 {
             color: #0093a2;
             font-size: 36px;
@@ -30,7 +30,7 @@
             display: flex;
             align-items: center;
             transition: background-color 0.3s ease;
-            color: #0093a2; /* Set cLLLLLLyan color for area names */
+            color: #0093a2;
         }
 
         .place {
@@ -124,8 +124,6 @@
 
     <hr>
 
-    <!-- Add more areas similarly -->
-
     <script>
         // GSAP animation to dynamically resize the content section with smooth height expansion
         function toggleArea(areaId, areaElement) {
@@ -141,14 +139,6 @@
             } else {
                 gsap.to(areaContent, { height: 0, duration: 0.5, ease: "power2.in" });
                 gsap.to(arrow, { rotation: 0, duration: 0.3 }); // Reset arrow rotation
-
-                // Close all child places when area is closed
-                const childPlaces = areaContent.querySelectorAll('.place');
-                childPlaces.forEach(place => {
-                    const placeId = place.getAttribute('onclick').match(/'(.*?)'/)[1];
-                    const placeContent = document.getElementById(placeId);
-                    gsap.to(placeContent, { height: 0, duration: 0.5, ease: "power2.in" });
-                });
             }
         }
 
@@ -164,26 +154,23 @@
                 );
                 gsap.to(arrow, { rotation: 90, duration: 0.3 }); // Rotate arrow
 
-                // Adjust parent area height after expanding a place or its groups
-                adjustParentHeights(placeElement);
+                // Adjust parent area height after expanding a place
+                adjustParentHeight(parentArea);
             } else {
                 gsap.to(placeContent, { height: 0, duration: 0.5, ease: "power2.in" });
                 gsap.to(arrow, { rotation: 0, duration: 0.3 }); // Reset arrow rotation
 
-                // Adjust parent area height after collapsing a place or its groups
+                // Adjust parent area height after collapsing a place
                 setTimeout(() => {
-                    adjustParentHeights(placeElement);
+                    adjustParentHeight(parentArea);
                 }, 500); // Delay adjustment to allow collapse animation to finish
             }
         }
 
-        // Function to adjust the heights of parent containers when any child expands
-        function adjustParentHeights(element) {
-            let currentElement = element.closest('.content-hidden');
-            while (currentElement) {
-                gsap.to(currentElement, { height: currentElement.scrollHeight + "px", duration: 0.5, ease: "power2.out" });
-                currentElement = currentElement.closest('.content-hidden'); // Move up to next parent
-            }
+        // Function to adjust the parent area height when children are expanded or collapsed
+        function adjustParentHeight(parentElement) {
+            const adjustedHeight = parentElement.scrollHeight;
+            gsap.to(parentElement, { height: adjustedHeight + "px", duration: 0.5, ease: "power2.out" });
         }
     </script>
 

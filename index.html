@@ -72,6 +72,17 @@
                 font-size: 14px;
                 color: #000;
             }
+
+        /* CSS for smooth height transition */
+        .place, .group {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+            .place.open, .group.open {
+                max-height: 1000px; /* Just a large enough number to accommodate content */
+            }
     </style>
 </head>
 <body>
@@ -116,14 +127,26 @@
         </details>
     </details>
 
-    <!-- JavaScript for nested collapsing behavior -->
+    <!-- JavaScript for smooth transitions -->
     <script>
+        // Toggle the visibility of places under an area
+        document.querySelectorAll('.place').forEach((placeDetail) => {
+            placeDetail.addEventListener('toggle', function () {
+                if (this.open) {
+                    this.classList.add('open');
+                } else {
+                    this.classList.remove('open');
+                }
+            });
+        });
+
         // Ensure that when an area closes, all its places and groups are closed too
         document.querySelectorAll('.area').forEach((areaDetail) => {
             areaDetail.addEventListener('toggle', function () {
                 if (!this.open) {
                     this.querySelectorAll('details').forEach((placeDetail) => {
                         placeDetail.open = false; // Close all places when the area closes
+                        placeDetail.classList.remove('open'); // Remove the open class for the transition
                     });
                 }
             });

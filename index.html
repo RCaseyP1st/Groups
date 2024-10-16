@@ -105,22 +105,28 @@
     <!-- Add more areas similarly -->
 
     <script>
-        // GSAP animation to dynamically resize the content section
+        // GSAP animation to dynamically resize the content section with smooth height expansion
         function toggleArea(areaId) {
             const areaContent = document.getElementById(areaId);
-            if (areaContent.clientHeight === 0) {
-                gsap.to(areaContent, { height: 'auto', duration: 0.5, ease: "power1.out" });
+            if (areaContent.style.height === '0px' || !areaContent.style.height) {
+                gsap.fromTo(areaContent,
+                    { height: 0 },
+                    { height: areaContent.scrollHeight + "px", duration: 0.5, ease: "power2.out" }
+                );
             } else {
-                gsap.to(areaContent, { height: 0, duration: 0.5, ease: "power1.in" });
+                gsap.to(areaContent, { height: 0, duration: 0.5, ease: "power2.in" });
             }
         }
 
         function togglePlace(placeId) {
             const placeContent = document.getElementById(placeId);
-            if (placeContent.clientHeight === 0) {
-                gsap.to(placeContent, { height: 'auto', duration: 0.5, ease: "power1.out" });
+            if (placeContent.style.height === '0px' || !placeContent.style.height) {
+                gsap.fromTo(placeContent,
+                    { height: 0 },
+                    { height: placeContent.scrollHeight + "px", duration: 0.5, ease: "power2.out" }
+                );
             } else {
-                gsap.to(placeContent, { height: 0, duration: 0.5, ease: "power1.in" });
+                gsap.to(placeContent, { height: 0, duration: 0.5, ease: "power2.in" });
             }
         }
     </script>

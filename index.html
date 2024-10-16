@@ -78,7 +78,7 @@
             max-height: 0;
             opacity: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            transition: max-height 0.7s ease-in-out, opacity 0.7s ease-in-out;
         }
 
         .open {
@@ -138,6 +138,10 @@
             if (area.classList.contains('open')) {
                 area.classList.remove('open');
             } else {
+                // Close all open areas first
+                document.querySelectorAll('.place-list').forEach(function (placeList) {
+                    placeList.classList.remove('open');
+                });
                 area.classList.add('open');
             }
         }
@@ -147,4 +151,14 @@
             var details = summaryElement.parentElement;
             if (details.classList.contains('open')) {
                 details.classList.remove('open');
+            } else {
+                // Close all sibling groups
+                details.parentElement.querySelectorAll('.place').forEach(function (sibling) {
+                    sibling.classList.remove('open');
+                });
+                details.classList.add('open');
             }
+        }
+    </script>
+</body>
+</html>

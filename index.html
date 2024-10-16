@@ -4,173 +4,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support Groups Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
     <style>
         body {
             font-family: 'Century Gothic', Arial, sans-serif;
             background-color: #f4f4f4;
-            overflow-x: hidden; /* Prevent scrollbars during animation */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
         }
 
+        /* Container for the vertical line and content */
         .container {
             display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: 50px auto;
+            align-items: flex-start;
             position: relative;
+        }
+
+        /* Vertical line on the left */
+        .vertical-line {
+            width: 3px;
+            background-color: black;
+            height: 100vh;
+            margin-right: 10px; /* Space between the line and the text */
+        }
+
+        /* Areas and places aligned next to the vertical line */
+        .content {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
         }
 
         .area {
             background-color: #eaeaea;
-            padding: 15px;
-            margin: 10px 0;
-            font-size: 24px;
+            padding: 10px;
+            font-size: 18px;
             font-weight: bold;
-            border: 2px solid #eaeaea;
-            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-bottom-color 0.3s ease;
-            position: relative;
+            border-bottom: 1px solid black;
+            margin: 5px 0;
         }
 
-            .area:hover {
-                background-color: #d0d0d0;
-                border-bottom-color: black;
+            /* When an area is selected, we underline it */
+            .area.selected {
+                text-decoration: underline;
             }
 
-        .underline {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            width: 100%;
-            background-color: black;
-            transform-origin: left;
-            transform: scaleX(1);
-            transition: transform 0.3s ease;
+        .place, .group {
+            padding-left: 20px;
+            font-size: 16px;
+            margin: 3px 0;
+            display: none; /* Initially hidden */
         }
 
-        /* Line for sweeping (no thickness change) */
-        .sweep {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 3px;
-            width: 100vw;
-            background-color: black;
-            z-index: 1;
-            transition: transform 0.7s ease-in-out;
+        /* Show places when an area is clicked */
+        .area.selected + .places {
+            display: block;
         }
 
-        .move-right {
-            transform: translateX(100vw); /* Move to the right of the screen */
-        }
-
-        .move-left {
-            transform: translateX(0); /* Return to the left side */
-        }
-
-        .places {
-            display: none;
-            margin-top: 20px;
-        }
-
-            .places.show {
-                display: block;
-                animation: fadeIn 1s ease;
-            }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
+        /* Show groups when a place is clicked */
+        .place.selected + .groups {
+            display: block;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="area" onclick="selectArea(this, 'central-essex')">
-            Central Essex
-            <div class="underline"></div>
-        </div>
-        <div class="area" onclick="selectArea(this, 'north-essex')">
-            North Essex
-            <div class="underline"></div>
-        </div>
-        <div class="area" onclick="selectArea(this, 'south-essex')">
-            South Essex
-            <div class="underline"></div>
-        </div>
+        <!-- The vertical line -->
+        <div class="vertical-line"></div>
 
-        <!-- Sweeping line element -->
-        <div id="sweep-line" class="sweep"></div>
+        <!-- Content next to the vertical line -->
+        <div class="content">
 
-        <!-- Places for selected area -->
-        <div id="central-essex-places" class="places">
-            <p>Chelmsford</p>
-            <p>Ingatestone</p>
-            <p>Witham</p>
+            <!-- Area: Central Essex -->
+            <div class="area" onclick="togglePlaces(this, 'central-essex')">
+                Central Essex
+            </div>
+            <div id="central-essex" class="places">
+                <div class="place" onclick="toggleGroups(this, 'chelmsford')">Chelmsford</div>
+                <div id="chelmsford" class="groups">
+                    <div class="group">Group 1</div>
+                    <div class="group">Group 2</div>
+                    <div class="group">Group 3</div>
+                </div>
+                <div class="place" onclick="toggleGroups(this, 'ingatestone')">Ingatestone</div>
+                <div id="ingatestone" class="groups">
+                    <div class="group">Group 1</div>
+                    <div class="group">Group 2</div>
+                </div>
+                <div class="place" onclick="toggleGroups(this, 'witham')">Witham</div>
+                <div id="witham" class="groups">
+                    <div class="group">Group 1</div>
+                </div>
+            </div>
+
+            <!-- Area: North Essex -->
+            <div class="area" onclick="togglePlaces(this, 'north-essex')">
+                North Essex
+            </div>
+            <div id="north-essex" class="places">
+                <div class="place" onclick="toggleGroups(this, 'colchester')">Colchester</div>
+                <div id="colchester" class="groups">
+                    <div class="group">Group 1</div>
+                    <div class="group">Group 2</div>
+                </div>
+                <div class="place" onclick="toggleGroups(this, 'clacton')">Clacton</div>
+                <div id="clacton" class="groups">
+                    <div class="group">Group 1</div>
+                </div>
+            </div>
+
+            <!-- Other areas (South Essex, etc.) would go here similarly -->
+
         </div>
-
-        <div id="north-essex-places" class="places">
-            <p>Colchester</p>
-            <p>Clacton</p>
-        </div>
-
-        <div id="south-essex-places" class="places">
-            <p>Basildon</p>
-            <p>Southend-on-Sea</p>
-        </div>
-
     </div>
 
     <script>
-        let sweepLine = document.getElementById('sweep-line');
-        let currentArea = null;
-
-        function selectArea(areaElement, areaId) {
-            const places = document.getElementById(`${areaId}-places`);
-
-            // If area already selected, reverse the animation and reset
-            if (currentArea === areaElement) {
-                resetSweep();
-                return;
+        function togglePlaces(areaElement, areaId) {
+            // Toggle selection of the clicked area
+            const selectedArea = document.querySelector('.area.selected');
+            if (selectedArea && selectedArea !== areaElement) {
+                selectedArea.classList.remove('selected');
+                document.getElementById(selectedArea.getAttribute('data-area')).style.display = 'none';
             }
+            areaElement.classList.toggle('selected');
 
-            // Hide other areas
-            document.querySelectorAll('.area').forEach(el => {
-                if (el !== areaElement) el.style.opacity = 0;
-            });
-
-            // Move the line to the right, clear other areas
-            sweepLine.classList.add('move-right');
-
-            // Wait for line to reach the right side, then reveal the places
-            setTimeout(() => {
-                document.querySelectorAll('.places').forEach(el => el.classList.remove('show'));
-                places.classList.add('show');
-
-                // Return the line to the left but keep places revealed
-                setTimeout(() => {
-                    sweepLine.classList.remove('move-right');
-                    sweepLine.classList.add('move-left');
-                    currentArea = areaElement; // Mark as selected
-                }, 700); // Time it takes for the line to sweep right
-
-            }, 700); // Same as above for syncing animation
+            // Show/hide places under the area
+            const places = document.getElementById(areaId);
+            places.style.display = (places.style.display === 'block') ? 'none' : 'block';
         }
 
-        function resetSweep() {
-            // Reset everything to the original state
-            sweepLine.classList.remove('move-left');
-            sweepLine.classList.remove('move-right');
-            document.querySelectorAll('.area').forEach(el => el.style.opacity = 1);
-            document.querySelectorAll('.places').forEach(el => el.classList.remove('show'));
-            currentArea = null; // Reset current selection
+        function toggleGroups(placeElement, placeId) {
+            // Toggle selection of the clicked place
+            const selectedPlace = document.querySelector('.place.selected');
+            if (selectedPlace && selectedPlace !== placeElement) {
+                selectedPlace.classList.remove('selected');
+                document.getElementById(selectedPlace.getAttribute('data-place')).style.display = 'none';
+            }
+            placeElement.classList.toggle('selected');
+
+            // Show/hide groups under the place
+            const groups = document.getElementById(placeId);
+            groups.style.display = (groups.style.display === 'block') ? 'none' : 'block';
         }
     </script>
 

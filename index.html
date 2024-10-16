@@ -9,10 +9,12 @@
         body {
             font-family: 'Century Gothic', Arial, sans-serif;
             background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            margin: 0;
+            padding: 0;
             height: 100vh;
+            display: flex;
+            justify-content: flex-start; /* Align content to the left */
+            align-items: flex-start;
         }
 
         /* Container for the vertical line and content */
@@ -20,6 +22,7 @@
             display: flex;
             align-items: flex-start;
             position: relative;
+            padding-left: 20px; /* Push the content slightly from the edge */
         }
 
         /* Vertical line on the left */
@@ -27,7 +30,9 @@
             width: 3px;
             background-color: black;
             height: 100vh;
-            margin-right: 10px; /* Space between the line and the text */
+            position: absolute;
+            left: 0;
+            top: 0;
         }
 
         /* Areas and places aligned next to the vertical line */
@@ -35,6 +40,7 @@
             display: flex;
             flex-direction: column;
             max-width: 300px;
+            padding-left: 30px; /* Space between the line and the text */
         }
 
         .area {
@@ -60,12 +66,12 @@
         }
 
         /* Show places when an area is clicked */
-        .area.selected + .places {
+        .places.show {
             display: block;
         }
 
         /* Show groups when a place is clicked */
-        .place.selected + .groups {
+        .groups.show {
             display: block;
         }
     </style>
@@ -128,13 +134,12 @@
             const selectedArea = document.querySelector('.area.selected');
             if (selectedArea && selectedArea !== areaElement) {
                 selectedArea.classList.remove('selected');
-                document.getElementById(selectedArea.getAttribute('data-area')).style.display = 'none';
             }
             areaElement.classList.toggle('selected');
 
             // Show/hide places under the area
             const places = document.getElementById(areaId);
-            places.style.display = (places.style.display === 'block') ? 'none' : 'block';
+            places.classList.toggle('show');
         }
 
         function toggleGroups(placeElement, placeId) {
@@ -142,13 +147,12 @@
             const selectedPlace = document.querySelector('.place.selected');
             if (selectedPlace && selectedPlace !== placeElement) {
                 selectedPlace.classList.remove('selected');
-                document.getElementById(selectedPlace.getAttribute('data-place')).style.display = 'none';
             }
             placeElement.classList.toggle('selected');
 
             // Show/hide groups under the place
             const groups = document.getElementById(placeId);
-            groups.style.display = (groups.style.display === 'block') ? 'none' : 'block';
+            groups.classList.toggle('show');
         }
     </script>
 

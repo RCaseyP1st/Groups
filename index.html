@@ -3,74 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support Groups for Dads and Partners</title>
+    <title>Dynamic Group Animation</title>
     <style>
         body {
             font-family: 'Century Gothic', Arial, sans-serif;
             background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll during animation */
         }
 
         .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 50px auto;
             position: relative;
-            width: 300px;
-            border-left: 3px solid #0093a2; /* Vertical line */
         }
 
-        .place {
-            position: relative;
-            padding: 10px;
-            cursor: pointer;
+        .area {
+            background-color: #eaeaea;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 24px;
             font-weight: bold;
-            color: #d87f23;
-            transition: transform 0.5s ease; /* Smooth slide effect */
+            border: 2px solid #eaeaea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-bottom-color 0.3s ease;
+            position: relative;
         }
 
-            .place:hover {
-                color: #0093a2;
+            .area:hover {
+                background-color: #d0d0d0;
+                border-bottom-color: black;
             }
 
-            /* Initial slide in from left or right */
-            .place:nth-child(odd) {
-                transform: translateX(-100%);
-            }
-
-            .place:nth-child(even) {
-                transform: translateX(100%);
-            }
-
-        /* Slide in from both sides */
-        .show-places .place {
-            transform: translateX(0);
+        .underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background-color: black;
+            transform-origin: left;
+            transform: scaleX(1);
+            transition: transform 0.3s ease, background-color 0.3s;
         }
 
-        /* Selected place animation */
-        .selected {
-            border-bottom: 2px solid #0093a2;
+        /* Rotated underline for the sweep animation */
+        .rotate {
+            transform: rotate(90deg) scaleX(0);
+            width: 0;
+            height: 100vh; /* Make it vertical */
         }
 
-        /* Hide other places when one is selected */
-        .hide-places .place:not(.selected) {
+        .sweep {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 0;
+            background-color: black;
+            z-index: 1;
+            transition: width 1.5s ease-in-out;
+        }
+
+        .sweep-expand {
+            width: 100vw;
+        }
+
+        .places {
             display: none;
+            margin-top: 20px;
         }
 
-        /* Reveal the group details */
-        .group {
-            display: none;
-            padding: 10px;
-            font-size: 14px;
-            color: black;
-        }
+            .places.show {
+                display: block;
+                animation: fadeIn 1s ease;
+            }
 
-        .show-group .group {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        /* Fade in animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -85,31 +95,71 @@
 <body>
 
     <div class="container">
-        <div class="place" onclick="selectPlace(this, 'chelmsford')">Chelmsford</div>
-        <div class="place" onclick="selectPlace(this, 'ingatestone')">Ingatestone</div>
-        <div class="place" onclick="selectPlace(this, 'witham')">Witham</div>
+        <div class="area" onclick="selectArea(this, 'central-essex')">
+            Central Essex
+            <div class="underline"></div>
+        </div>
+        <div class="area" onclick="selectArea(this, 'north-essex')">
+            North Essex
+            <div class="underline"></div>
+        </div>
+        <div class="area" onclick="selectArea(this, 'south-essex')">
+            South Essex
+            <div class="underline"></div>
+        </div>
 
-        <!-- Group details (initially hidden) -->
-        <div id="chelmsford-group" class="group">Andy's Man Club, Who Let the Dads Out?</div>
-        <div id="ingatestone-group" class="group">Local Support Group</div>
-        <div id="witham-group" class="group">Dads' Coffee Morning</div>
+        <!-- Sweeping line element -->
+        <div id="sweep-line" class="sweep"></div>
+
+        <!-- Places for selected area -->
+        <div id="central-essex-places" class="places">
+            <p>Chelmsford</p>
+            <p>Ingatestone</p>
+            <p>Witham</p>
+        </div>
+
+        <div id="north-essex-places" class="places">
+            <p>Colchester</p>
+            <p>Clacton</p>
+        </div>
+
+        <div id="south-essex-places" class="places">
+            <p>Basildon</p>
+            <p>Southend-on-Sea</p>
+        </div>
+
     </div>
 
     <script>
-        // Function to select a place and animate the line
-        function selectPlace(place, groupId) {
-            // Hide other places and show only the selected one
-            document.querySelector('.container').classList.add('hide-places');
-            place.classList.add('selected');
+        // Handle click on area
+        function selectArea(areaElement, areaId) {
+            const underline = areaElement.querySelector('.underline');
+            const sweepLine = document.getElementById('sweep-line');
+            const places = document.getElementById(`${areaId}-places`);
 
-            // Show group details
-            document.getElementById(groupId + '-group').classList.add('show-group');
+            // Animate underline to rotate and then sweep
+            underline.classList.add('rotate');
+
+            setTimeout(() => {
+                sweepLine.classList.add('sweep-expand'); // Start the sweeping animation
+
+                setTimeout(() => {
+                    // Hide other areas
+                    document.querySelectorAll('.area').forEach(el => el.style.display = 'none');
+
+                    // Reveal the places after sweeping
+                    places.classList.add('show');
+
+                    // Reset the sweep line
+                    setTimeout(() => {
+                        sweepLine.classList.remove('sweep-expand');
+                        underline.classList.remove('rotate');
+                    }, 2000);
+
+                }, 1500); // Matches sweep animation duration
+
+            }, 500); // Slight delay for the underline rotation
         }
-
-        // Initial animation to show places sliding in from both sides
-        window.onload = () => {
-            document.querySelector('.container').classList.add('show-places');
-        };
     </script>
 
 </body>

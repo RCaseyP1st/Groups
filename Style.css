@@ -1,22 +1,58 @@
 ﻿body {
-    font-family: 'Century Gothic', sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Century Gothic', Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-summary {
-    font-size: 24px;
+h1 {
+    text-align: center;
+    font-size: 36px;
     color: #0093a2;
+    margin-bottom: 20px;
 }
 
-details {
-    margin-bottom: 15px;
+h2 {
+    color: #0093a2;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: left;
 }
 
-a {
+details summary {
+    font-size: 24px;
+    font-weight: bold;
     color: #d87f23;
-    text-decoration: none;
+    margin: 10px 0;
 }
 
-    a:hover {
-        text-decoration: underline;
+.group {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+    .group h3 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0093a2;
     }
+
+    .group img {
+        width: 160px;
+        height: 160px;
+        float: left;
+        margin-right: 10px;
+    }
+
+    .group p {
+        font-size: 14px;
+        color: #000;
+    }
+
+hr {
+    border: 1px solid black;
+    margin: 20px 0;
+}
+
+.region {
+    margin-bottom: 30px;
+}

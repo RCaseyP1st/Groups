@@ -23,6 +23,28 @@ details summary {
     font-weight: bold;
     color: #d87f23;
     margin: 10px 0;
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+    details summary:hover {
+        background-color: #f1f1f1;
+    }
+
+details[open] summary {
+    color: #f39c12;
+}
+
+details div, details p {
+    padding-left: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+}
+
+details[open] div, details[open] p {
+    max-height: 500px; /* Adjust this value based on content */
 }
 
 .group {
@@ -47,11 +69,6 @@ details summary {
         font-size: 14px;
         color: #000;
     }
-
-hr {
-    border: 1px solid black;
-    margin: 20px 0;
-}
 
 .region {
     margin-bottom: 30px;

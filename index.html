@@ -3,145 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support Groups Animation</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <title>Support Groups for Dads and Partners</title>
     <style>
         body {
             font-family: 'Century Gothic', Arial, sans-serif;
             background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
         }
 
-        /* Container for the vertical line and content */
-        .container {
-            display: flex;
-            align-items: flex-start;
-            position: relative;
-            padding-left: 20px;
-        }
-
-        /* Vertical line next to the areas */
-        .vertical-line {
-            width: 3px;
-            background-color: black;
-            height: 100vh;
-            margin-right: 10px; /* Small gap between the line and the text */
-        }
-
-        /* Areas and places aligned next to the vertical line */
-        .content {
-            display: flex;
-            flex-direction: column;
-            max-width: 300px;
+        h1 {
+            color: #0093a2;
+            font-size: 36px; /* Adjust to match header size in image */
+            font-weight: bold;
         }
 
         .area {
             background-color: #eaeaea;
-            padding: 10px;
-            font-size: 18px;
-            font-weight: bold;
+            padding: 15px;
+            margin: 10px 0;
             cursor: pointer;
-            border-bottom: 1px solid black;
-            margin: 5px 0;
+            color: #0093a2;
+            font-size: 24px; /* Adjust size to match the image */
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
-            /* When an area is selected, we underline it */
-            .area.selected {
-                text-decoration: underline;
+        .place {
+            padding-left: 30px;
+            margin-top: 5px;
+            cursor: pointer;
+            color: #d87f23;
+            font-size: 20px; /* Adjust size to match the image */
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .group {
+            padding-left: 45px;
+            margin-top: 5px;
+            color: black;
+            font-size: 18px; /* Adjust size to match the image */
+            transition: background-color 0.3s ease;
+        }
+
+            /* Hover states with a lighter grey fade effect */
+            .area:hover, .place:hover, .group:hover {
+                background-color: #f0f0f0;
             }
 
-        .place, .group {
-            padding-left: 20px;
-            font-size: 16px;
-            margin: 3px 0;
-            display: none; /* Initially hidden */
+        .slide {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
         }
 
-        /* Show places when an area is clicked */
-        .places.show {
-            display: block;
+        .expand {
+            max-height: 500px; /* Adjust based on content */
         }
 
-        /* Show groups when a place is clicked */
-        .groups.show {
-            display: block;
+        hr {
+            border: 1px solid #ccc;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- The vertical line -->
-        <div class="vertical-line"></div>
+    <h1>Groups</h1>
 
-        <!-- Content next to the vertical line -->
-        <div class="content">
-
-            <!-- Area: Central Essex -->
-            <div class="area" onclick="togglePlaces(this, 'central-essex')">
-                Central Essex
-            </div>
-            <div id="central-essex" class="places">
-                <div class="place" onclick="toggleGroups(this, 'chelmsford')">Chelmsford</div>
-                <div id="chelmsford" class="groups">
-                    <div class="group">Group 1</div>
-                    <div class="group">Group 2</div>
-                    <div class="group">Group 3</div>
-                </div>
-                <div class="place" onclick="toggleGroups(this, 'ingatestone')">Ingatestone</div>
-                <div id="ingatestone" class="groups">
-                    <div class="group">Group 1</div>
-                    <div class="group">Group 2</div>
-                </div>
-                <div class="place" onclick="toggleGroups(this, 'witham')">Witham</div>
-                <div id="witham" class="groups">
-                    <div class="group">Group 1</div>
-                </div>
-            </div>
-
-            <!-- Area: North Essex -->
-            <div class="area" onclick="togglePlaces(this, 'north-essex')">
-                North Essex
-            </div>
-            <div id="north-essex" class="places">
-                <div class="place" onclick="toggleGroups(this, 'colchester')">Colchester</div>
-                <div id="colchester" class="groups">
-                    <div class="group">Group 1</div>
-                    <div class="group">Group 2</div>
-                </div>
-                <div class="place" onclick="toggleGroups(this, 'clacton')">Clacton</div>
-                <div id="clacton" class="groups">
-                    <div class="group">Group 1</div>
-                </div>
-            </div>
-
-            <!-- Other areas (South Essex, etc.) would go here similarly -->
-
+    <div class="area" onclick="toggleDisplay('central-essex')">▼ Central Essex</div>
+    <div id="central-essex" class="slide">
+        <div class="place" onclick="toggleDisplay('chelmsford')">► Chelmsford</div>
+        <div id="chelmsford" class="slide">
+            <div class="group">Andy's Man Club</div>
+            <div class="group">Who Let the Dads Out?</div>
+        </div>
+        <div class="place" onclick="toggleDisplay('ingatestone')">► Ingatestone</div>
+        <div id="ingatestone" class="slide">
+            <div class="group">Local Support Group</div>
+        </div>
+        <div class="place" onclick="toggleDisplay('witham')">► Witham</div>
+        <div id="witham" class="slide">
+            <div class="group">Dads' Coffee Morning</div>
         </div>
     </div>
 
+    <hr>
+
+    <div class="area" onclick="toggleDisplay('north-essex')">▼ North Essex</div>
+    <div id="north-essex" class="slide">
+        <div class="place" onclick="toggleDisplay('colchester')">► Colchester</div>
+        <div id="colchester" class="slide">
+            <div class="group">Group 1</div>
+            <div class="group">Group 2</div>
+        </div>
+        <!-- Add more places/groups similarly -->
+    </div>
+
+    <hr>
+
+    <!-- Add more areas similarly -->
+
     <script>
-        function togglePlaces(areaElement, areaId) {
-            // Toggle the 'selected' class on the clicked area
-            areaElement.classList.toggle('selected');
-
-            // Toggle the visibility of the places under the selected area
-            const places = document.getElementById(areaId);
-            places.classList.toggle('show');
-        }
-
-        function toggleGroups(placeElement, placeId) {
-            // Toggle the 'selected' class on the clicked place
-            placeElement.classList.toggle('selected');
-
-            // Toggle the visibility of the groups under the selected place
-            const groups = document.getElementById(placeId);
-            groups.classList.toggle('show');
+        // Toggle display for areas and places with smooth animation
+        function toggleDisplay(id) {
+            const element = document.getElementById(id);
+            if (element.classList.contains('expand')) {
+                element.classList.remove('expand');
+                element.style.maxHeight = null;
+            } else {
+                element.classList.add('expand');
+                element.style.maxHeight = element.scrollHeight + "px";
+            }
         }
     </script>
 

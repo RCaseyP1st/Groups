@@ -8,40 +8,42 @@ body {
 h1 {
     text-align: center;
     font-size: 36px;
-    color: #0093a2;
+    color: #0093a2; /* Cyan green color */
     margin-bottom: 20px;
 }
 
-/* Styling for the Region Headings */
+/* Region (e.g., Central Essex, North Essex) Styles */
 .region-details summary {
     font-size: 30px;
     font-weight: bold;
-    color: #0093a2;
+    color: #0093a2; /* Cyan green color */
     margin: 10px 0;
     padding: 10px;
     background-color: #e0f7fa;
     border: 2px solid #0093a2;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .region-details[open] summary {
-    background-color: #b2ebf2;
+    background-color: #b2ebf2; /* Slightly lighter cyan when open */
 }
 
-/* Inner summary for places like Chelmsford */
+/* Place (e.g., Chelmsford) Styles */
 details summary {
     font-size: 24px;
     font-weight: bold;
-    color: #d87f23;
+    color: #d87f23; /* Orange color */
     margin: 10px 0;
     padding: 10px;
     background-color: #fff3e0;
     border: 1px solid #d87f23;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
 }
 
 details[open] summary {
-    background-color: #ffe0b2;
+    background-color: #ffe0b2; /* Lighter orange when open */
 }
 
 /* Group Styling */
@@ -70,19 +72,14 @@ details[open] summary {
 
 /* Accordion-style Slide Animation */
 details {
-    transition: max-height 0.5s ease-in-out;
+    max-height: 0;
     overflow: hidden;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
 }
 
     details[open] {
-        max-height: 1000px; /* Large enough value to allow for content */
-    }
-
-    details:not([open]) {
-        max-height: 0;
-        padding: 0;
-        border: none;
-        margin: 0;
+        max-height: 500px; /* Adjust as necessary to fit content */
+        padding: 10px 0;
     }
 
 hr {

@@ -17,6 +17,7 @@
             cursor: pointer;
             color: #0093a2;
             border-radius: 5px;
+            transition: background-color 0.3s ease; /* Smooth transition for hover */
         }
 
         .place {
@@ -24,21 +25,20 @@
             margin-top: 5px;
             cursor: pointer;
             color: #d87f23;
+            transition: background-color 0.3s ease; /* Smooth transition for hover */
         }
 
         .group {
             padding-left: 40px;
             margin-top: 5px;
             color: black;
+            transition: background-color 0.3s ease; /* Smooth transition for hover */
         }
 
-        .area:hover, .place:hover {
-            background-color: #d0d0d0;
-        }
-
-        .group:hover {
-            background-color: #f0f0f0;
-        }
+            /* Hover states with a lighter grey fade effect */
+            .area:hover, .place:hover, .group:hover {
+                background-color: #f0f0f0;
+            }
 
         .slide {
             max-height: 0;
@@ -47,7 +47,7 @@
         }
 
         .expand {
-            max-height: 500px; /* You can adjust this based on content */
+            max-height: 500px; /* Adjust based on content */
         }
     </style>
 </head>
